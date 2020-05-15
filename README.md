@@ -6,9 +6,9 @@ Reports published on Tuesdays and Fridays after 4 p.m.
 
 Workflow: 
 
--convert PDF to .csv
--clean facility names in text editor
--import cleaned .csv into R  
+-convert PDF to .csv \n
+-clean facility names in text editor\n
+-import cleaned .csv into R 
 
 
 
