@@ -1,0 +1,72 @@
+cases,deaths,facility,facility_county,facility_type
+27,1,Pine Forest Rest Home,Northampton,Residential Care
+5,0,Verra Springs at Heritage Greens,Guilford,Residential Care
+53,7,Cherry Springs Village,Henderson,Residential Care
+6,3,Spring Arbor of Albemarle,Stanly,Residential Care
+5,0,Brookdale Berkeley Blvd,Wayne,Residential Care
+3,1,Brookdale Country Day,Wayne,Residential Care
+23,3,The Social at Cotswold,Mecklenburg,Residential Care
+9,0,Residential Services Inc,Orange,Residential Care
+3,0,Forsynthia Group Home,Mecklenburg,Residential Care
+27,2,Woodridge Assisted Living Facility,Union,Residential Care
+2,0,"The Laurels in the Village, Pineville",Mecklenburg,Residential Care
+15,0,Shelburne Place,Mecklenburg,Residential Care
+2,0,Elmcroft of Harrisburg,Cabarrus,Residential Care
+11,0,Charlotte Square,Mecklenburg,Residential Care
+2,0,Suburban Guardianship Concord,Cabarrus,Residential Care
+6,0,ResCare Group Home - Men,Rutherford,Residential Care
+13,0,Canyon Hills Treatment Facility,Hoke,Residential Care
+4,0,Tabor Commons,Columbus,Residential Care
+4,0,Spring Arbor of Kinston,Lenoir,Residential Care
+30,4,Brian Center Health & Rehab/Hendersonville,Henderson,Nursing Home
+108,11,Pruitt Health -Carolina Point,Orange,Nursing Home
+59,6,Grace Heights Health and Rehab,Burke,Nursing Home
+3,0,Durham VA Community Living Center,Durham,Nursing Home
+26,3,Pavilion Health Center at Brightmore,Mecklenburg,Nursing Home
+65,3,Pinehurst HealthCare & Rehab,Moore,Nursing Home
+65,7,Springbrook Nursing and Rehab,Johnston,Nursing Home
+12,1,Liberty Commons Nursing & Rehabilitation Center of Columbus County,Columbus,Nursing Home
+12,1,Cleveland Pines,Cleveland,Nursing Home
+67,5,The Laurels Of Chatham,Chatham,Nursing Home
+52,2,Signature HealthCARE,Orange,Nursing Home
+62,14,Louisburg Healthcare and Rehab Center,Franklin,Nursing Home
+74,6,Five Oaks Manor Rehab,Cabarrus,Nursing Home
+144,10,The Citadel at Salisbury,Rowan,Nursing Home
+2,0,Huntersville Oaks,Mecklenburg,Nursing Home
+2,0,Village Care of King,Stokes,Nursing Home
+35,3,Monroe Rehab Center,Union,Nursing Home
+30,1,LongLeaf Neuro -Medical Treatment Center,Wilson,Nursing Home
+31,4,Mount Olive Center,Wayne,Nursing Home
+20,2,Village Green Health & Rehab,Cumberland,Nursing Home
+41,2,Alston Brook,Davidson,Nursing Home
+16,3,NC State Veterans Home- Salisbury,Rowan,Nursing Home
+49,6,Wellington Rehab and Healthcare,Wake,Nursing Home
+6,1,Peak Resources -Outer Banks,Dare,Nursing Home
+4,0,Hunter Woods Nursing & Rehab,Mecklenburg,Nursing Home
+18,1,"Carrington Place, Matthews",Mecklenburg,Nursing Home
+95,7,Durham Nursing & Rehabilitation Center,Durham,Nursing Home
+22,3,Premier Living & Rehab Center,Columbus,Nursing Home
+53,10,Autumn Care - Cornelius,Mecklenburg,Nursing Home
+33,3,Treyburn Rehab & Nursing,Durham,Nursing Home
+26,1,Sunnybrook Rehabilitation Center,Wake,Nursing Home
+2,0,The Lodge at Mills River,Henderson,Nursing Home
+4,1,Rich Square Nursing and Rehabilitation,Northampton,Nursing Home
+24,0,The Laurels of Hendersonville,Henderson,Nursing Home
+3,0,Three Rivers Health & Rehabilitation,Bertie,Nursing Home
+2,0,Autumn Care - Statesville,Iredell,Nursing Home
+2,0,White Oak Manor Tryon,Polk,Nursing Home
+6,0,Clapps Nursing Center,Guilford,Nursing Home
+42,1,Universal Health Lillington,Harnett,Nursing Home
+2,0,Autumn Care - Saluda,Polk,Nursing Home
+10,1,Pelican Health Henderson,Vance,Nursing Home
+2,0,Liberty Commons Salisbury,Rowan,Nursing Home
+2,1,Hillcrest Convalescent Center,Durham,Nursing Home
+6,0,Camden Health & Rehab,Guilford,Nursing Home
+5,1,Autumn Care - Drexel,Burke,Nursing Home
+2,0,Autumn Care - Marshville,Union,Nursing Home
+4,1,NC State Veterans Home - Kinston,Lenoir,Nursing Home
+24,0,Rivers Correctional Institution,Hertford,Correctional
+4,0,Durham County Detention Center,Durham,Correctional
+12,1,Atrium Rehabilitation Northeast,Cabarrus,Other Congregate Living Facility
+8,0,Rudd Strawberry Farm,Guilford,Other Congregate Living Facility
+2,0,Salvation Army Homeless Shelter,Cabarrus,Other Congregate
