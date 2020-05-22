@@ -2,6 +2,13 @@ library(tidyverse)
 library(janitor)
 library(here)
 
+### EIGHTH 
+may22outbreaks <-  read_csv(here("outbreaks", "5-22outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
+  mutate(releasedate = "5/2") %>% 
+  filter(!is.na(total_cases))
+
+write_csv(may22outbreaks, "5-22outbreaksclean.csv")
+
 ### SEVENTH DHHS REPORT
 may19outbreaks <-  read_csv(here("outbreaks", "5-19outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
   mutate(releasedate = "5/19") %>% 
