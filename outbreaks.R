@@ -2,9 +2,12 @@ library(tidyverse)
 library(janitor)
 library(here)
 
+###NINTH
+may26outbreaks <- read_csv("outbreaks", )
+
 ### EIGHTH 
 may22outbreaks <-  read_csv(here("outbreaks", "5-22outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
-  mutate(releasedate = "5/2") %>% 
+  mutate(releasedate = "5/22") %>% 
   filter(!is.na(total_cases))
 
 write_csv(may22outbreaks, "5-22outbreaksclean.csv")
@@ -13,6 +16,9 @@ write_csv(may22outbreaks, "5-22outbreaksclean.csv")
 may19outbreaks <-  read_csv(here("outbreaks", "5-19outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
   mutate(releasedate = "5/19") %>% 
   filter(!is.na(total_cases))
+
+may19outbreaks %>% 
+  mutate()
 
 ### SIXTH DHHS REPORT
 may15outbreaks <- read_csv(here("outbreaks", "05-15-outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
@@ -74,11 +80,11 @@ april27outbreaks <- bind_cols(april27cases, april27facilities)  %>%
   mutate(facility = str_replace(facility, "Autumn Care - Marshville", "Autumn Care- Marshville"))
 
 # combine
-alloutbreaks <- bind_rows(april27outbreaks, may1outbreaks, may5outbreaks, may8outbreaks, may12outbreaks, may15outbreaks)
+alloutbreaks <- bind_rows(april27outbreaks, may1outbreaks, may5outbreaks, may8outbreaks, may12outbreaks, may15outbreaks, may19outbreaks, may22outbreaks)
 
 ### ANALYZE
 # total cases and deaths for all facilities in the latest report
-may15outbreaks %>% 
+may22outbreaks %>% 
   adorn_totals(where = "row") %>% tail(5)
 
 # total cases and deaths for just nursing homes
