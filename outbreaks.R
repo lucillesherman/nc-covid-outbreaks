@@ -2,8 +2,12 @@ library(tidyverse)
 library(janitor)
 library(here)
 
-###NINTH
-may26outbreaks <- read_csv("outbreaks", )
+### NINTH
+may26outbreaks <- read_csv(here("outbreaks", "5-26outbreaks.csv"), col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
+  mutate(releasedate = "5/26") %>% 
+  filter(!is.na(total_cases))
+
+write_csv(may26outbreaks, "5-26outbreaksclean.csv")
 
 ### EIGHTH 
 may22outbreaks <-  read_csv(here("outbreaks", "5-22outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
@@ -16,9 +20,6 @@ write_csv(may22outbreaks, "5-22outbreaksclean.csv")
 may19outbreaks <-  read_csv(here("outbreaks", "5-19outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
   mutate(releasedate = "5/19") %>% 
   filter(!is.na(total_cases))
-
-may19outbreaks %>% 
-  mutate()
 
 ### SIXTH DHHS REPORT
 may15outbreaks <- read_csv(here("outbreaks", "05-15-outbreaks.csv"),  col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
@@ -118,7 +119,7 @@ facilities515 <- may15outbreaks$facility
 
 # which facilities are new additions to the latest report
 may15outbreaks %>% 
-  filter(!facilities515 %in% may12outbreaks$facility) %>% View()
+  filter(!facilities515 %in% may12outbreaks$facility) %>% View() 
 
 # finding facilities that have been removed
 # how many times do facilities show up? 
