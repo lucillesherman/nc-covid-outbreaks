@@ -2,6 +2,32 @@ library(tidyverse)
 library(janitor)
 library(here)
 
+### TWELFTH
+june5outbreaks <- read_csv(here("outbreaks", "6-5-outbreaks.csv"), col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
+  mutate(releasedate = "6/5") %>% 
+  filter(!is.na(total_cases))
+
+june5outbreaks %>% 
+  filter(facility_county %in% c("Chatham", "Durham", "Wake", "Orange", "Johnston")) %>% 
+  filter(facility_type != "Other") %>% View()
+
+### ELEVENTH
+june2outbreaks <- read_csv(here("outbreaks", "6-2outbreaks.csv"), col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
+  mutate(releasedate = "6/2") %>% 
+  filter(!is.na(total_cases))
+
+### TENTH
+may29outbreaks <- read_csv(here("outbreaks", "congregate_settings - congregate_data5_29.csv")) %>% 
+  mutate(releasedate = "5/29") %>% 
+  clean_names() %>% 
+  filter(!is.na(total_cases)) %>% 
+  rename(facility_county = "county") %>% 
+  rename(facility_type = "type")
+
+may29outbreaks %>% 
+  filter(facility_county %in% c("Chatham", "Durham", "Wake", "Orange", "Johnston")) %>% 
+  filter(facility_type != "Other") %>% View()
+
 ### NINTH
 may26outbreaks <- read_csv(here("outbreaks", "5-26outbreaks.csv"), col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
   mutate(releasedate = "5/26") %>% 
@@ -85,18 +111,26 @@ alloutbreaks <- bind_rows(april27outbreaks, may1outbreaks, may5outbreaks, may8ou
 
 ### ANALYZE
 # total cases and deaths for all facilities in the latest report
-may22outbreaks %>% 
+june5outbreaks %>% 
   adorn_totals(where = "row") %>% tail(5)
 
 # total cases and deaths for just nursing homes
-may15outbreaks %>% filter(facility_type == "Nursing Home") %>% 
+june5outbreaks %>% filter(facility_type == "Nursing Home") %>% 
+  adorn_totals(where = "row") %>% tail(5)
+
+# previous weeks
+june2outbreaks %>% 
+  adorn_totals(where = "row") %>% tail(5)
+
+# total cases and deaths for just nursing homes
+june2outbreaks %>% filter(facility_type == "Nursing Home") %>% 
   adorn_totals(where = "row") %>% tail(5)
 
 # differences between latest two reports
 alloutbreaks %>% 
   select(facility, releasedate, total_cases)%>% 
   spread(releasedate, total_cases) %>% 
-  mutate(diff = `5/15` - `5/12`) %>% View()
+  mutate(diff = `6/5` - `6/2`) %>% View()
   # mutate(cases512 = as.numeric(ifelse(releasedate == "5/15", total_cases, NA))) %>% 
   # mutate(cases58 = as.numeric(ifelse(releasedate == "5/12", total_cases, NA))) %>% 
   # filter(releasedate == "5/15" | releasedate == "5/12") %>% 
@@ -113,13 +147,24 @@ alloutbreaks %>%
 #   mutate(diff = sum(cases512 - cases58)) %>% View()
 
 # list of the facility names for two latest reports
-facilities512 <- may12outbreaks$facility
+facilities29 <- may29outbreaks$facility
 
-facilities515 <- may15outbreaks$facility
+facilities65 <- june5outbreaks$facility
 
 # which facilities are new additions to the latest report
-may15outbreaks %>% 
-  filter(!facilities515 %in% may12outbreaks$facility) %>% View() 
+compare <- june5outbreaks %>% 
+  filter(!facilities65 %in% may29outbreaks$facility)
+
+compare %>% filter(facility_county %in% c("Chatham", "Durham", "Wake", "Orange", "Johnston")) %>% View()
+
+# list of the facility names for two latest reports
+facilities65 <- june5outbreaks$facility
+
+# which facilities are new additions to the latest report
+compare <- june5outbreaks %>% 
+  filter(!facilities65 %in% may29outbreaks$facility)
+compare %>% filter(facility_county %in% c("Chatham", "Durham", "Wake", "Orange", "Johnston")) %>% View()
+
 
 # finding facilities that have been removed
 # how many times do facilities show up? 
