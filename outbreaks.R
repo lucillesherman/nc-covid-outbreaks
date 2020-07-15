@@ -1,6 +1,12 @@
 library(tidyverse)
 library(janitor)
 library(here)
+library(googlesheets4)
+
+# don't forget to add the latest csv to the bind
+
+july14outbreaks <- read_csv(here::here("outbreaks", "7-14-outbreaks.csv"), col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
+  mutate(releasedate = "7/14/2020")
 
 july10outbreaks <- read_csv(here::here("outbreaks", "7-10-outbreaks.csv"), col_names = c("facility_type", "facility_county", "facility", "staff_cases", "staff_deaths", "resident_cases", "resident_deaths", "total_cases", "total_deaths")) %>% 
   mutate(releasedate = "7/10/2020")
@@ -139,7 +145,7 @@ april27outbreaks <- bind_cols(april27cases, april27facilities)  %>%
   mutate(facility = str_replace(facility, "Autumn Care - Marshville", "Autumn Care- Marshville"))
 
 # combine
-alloutbreaks <- bind_rows(april27outbreaks, may1outbreaks, may5outbreaks, may8outbreaks, may12outbreaks, may15outbreaks, may19outbreaks, may22outbreaks, may26outbreaks, may29outbreaks, june2outbreaks, june5outbreaks, june9outbreaks, june12outbreaks, june16outbreaks, june19outbreaks, june23outbreaks, june26outbreaks, june30outbreaks, july2outbreaks, july7outbreaks, july10outbreaks) %>% 
+alloutbreaks <- bind_rows(april27outbreaks, may1outbreaks, may5outbreaks, may8outbreaks, may12outbreaks, may15outbreaks, may19outbreaks, may22outbreaks, may26outbreaks, may29outbreaks, june2outbreaks, june5outbreaks, june9outbreaks, june12outbreaks, june16outbreaks, june19outbreaks, june23outbreaks, june26outbreaks, june30outbreaks, july2outbreaks, july7outbreaks, july10outbreaks, july14outbreaks) %>% 
   mutate(facility = str_replace(facility, "Aston Park Health Care Center Inc", "Aston Park Health Care")) %>% 
   mutate(facility = str_replace(facility, "Autumn Care – Cornelius", "Autumn Care - Cornelius")) %>% 
   mutate(facility = str_replace(facility, "Autumn Care – Drexel", "Autumn Care - Drexel")) %>% 
@@ -244,11 +250,18 @@ alloutbreaks <- bind_rows(april27outbreaks, may1outbreaks, may5outbreaks, may8ou
   mutate(facility = str_replace(facility, "PruittHealth-Farmville", "PruittHealth – Farmville")) %>% 
   mutate(facility = str_replace(facility, "Universal Health Care and Rehabilitation Center Concord", "Universal Healthcare Concord")) %>% 
   mutate(facility = str_replace(facility, "White Oak Manor Burlington", "White Oak Manor-Burlington")) %>% 
-  mutate(facility = str_replace(facility, "White Oak Manor Charlotte", "White Oak Manor – Charlotte"))
+  mutate(facility = str_replace(facility, "White Oak Manor Charlotte", "White Oak Manor – Charlotte")) %>% 
+  mutate(facility = str_replace(facility, "Abernathy Laurels Newton", "Abernethy Laurels")) %>% 
+  mutate(facility = str_replace(facility, "Dove’s Nest (of Charlotte Rescue Mecklenburg Mission)", "Dove’s Nest (of Charlotte Rescue Mission)")) %>% 
+  mutate(facility = str_replace(facility, "J Iverson Riddle Developmental Center", "J. Iverson Riddle Developmental Center")) %>% 
+  mutate(facility = str_replace(facility, "Springbrook Rehabilitation and Nursing Center", "Springbrook Nursing and Rehab"))
+
+# how many nursing homes have ever had an outbreak
+alloutbreaks %>% filter(facility_type == "Nursing Home") %>% distinct(facility, facility_county, facility_type, .keep_all = T)
+
+# check for multiple name spellings
 alloutbreaks %>% 
   count(facility) %>% View()
-
-alloutbreaks %>% filter(facility_type == "Nursing Home") %>% distinct(facility, .keep_all = T)
 
 ### ANALYZE
 # total cases and deaths for all facilities in the latest report
@@ -342,6 +355,7 @@ lasttwo <- alloutbreaks %>%
   filter(releasedate == "5/12" | releasedate == "5/15") %>% 
   count(facility)
 
+# import nursing home names/addresses
 all_nh <- read_csv("outbreaks/nh.txt", col_names = c("facility_id", "facility_type", "facility_county", "facility", "facility_address1", "facility_address2", "facility_city", "facility_state", "facility_zip", "facility_phone", "facility_fax", "expiration", "license_no", "licensee", "nftotal", "ha_total", "total_beds", "provider", "admin")) %>% 
   mutate(facility_type = "Nursing Home")
 
@@ -377,7 +391,6 @@ nursing_home_outbreaks <- alloutbreaks %>%
   mutate(facility = str_replace(facility, "Brian Center Health & Rehab/Hendersonville", "Brian Center Health & Rehabilitation/Hendersonville")) %>% 
   mutate(facility = str_replace(facility, "Springbrook Nursing and Rehab", "Springbrook Nursing and Rehabilitation Center")) %>% 
   mutate(facility = str_replace(facility, "Autumn Care - Cornelius", "Autumn Care of Cornelius")) %>% 
-  mutate(facility = str_replace(facility, "Abernathy Laurels Newton", "Abernethy Laurels")) %>% 
   mutate(facility = str_replace(facility, "Autumn Care - Saluda", "Autumn Care of Saluda")) %>% 
   mutate(facility = str_replace(facility, "Autumn Care - Statesville", "Autumn Care of Statesville")) %>% 
   mutate(facility = str_replace(facility, "Autumn Care – Marshville", "Autumn Care of Marshville")) %>% 
@@ -416,13 +429,38 @@ nursing_home_outbreaks <- alloutbreaks %>%
   mutate(facility = str_replace(facility, "White Oak Manor \\– Charlotte", "White Oak Manor-Charlotte")) %>% 
   mutate(facility = str_replace(facility, "Wilkes\\(boro Health and Rehabilitation", "Wilkesboro Health and Rehabilitation, LLC")) %>% 
   mutate(facility = str_replace(facility, "WilMed Nursing and Rehabilitation", "Wilson Rehabilitation and Nursing Center")) %>% 
-  mutate(facility = str_replace(facility, "Wilora Lake Health Care", "Wilora Lake Healthcare Center"))
+  mutate(facility = str_replace(facility, "Wilora Lake Health Care", "Wilora Lake Healthcare Center")) %>% 
+  mutate(facility = str_replace(facility, "Stonecreek Health and Rehabilitation", "StoneCreek Health and Rehabilitation"))
 
 nh_join <- all_nh %>% 
-  left_join(nursing_home_outbreaks, by = c("facility", "facility_county", "facility_type")) %>% 
+  right_join(nursing_home_outbreaks, by = c("facility", "facility_county", "facility_type")) %>% 
   arrange(desc(total_cases)) %>% 
-  distinct(facility_address1, .keep_all = T)
+  distinct(facility_address1, facility, .keep_all = T)
 
+outbreaks_ever <- nh_join %>% 
+  filter(!is.na(total_cases))
+
+residential_care <- alloutbreaks %>% 
+  filter(facility_type == "Residential Care" | facility_type == "Residential Care Facility") %>% 
+  mutate(releasedate = mdy(releasedate)) %>% 
+  arrange(desc(releasedate)) %>% 
+  distinct(facility, .keep_all = TRUE)
+
+residential_care %>% count(facility_type)
+
+gs4_auth(email = "lsherman@newsobserver.com")
+
+# grab the spreadsheet so you can write to it
+outbreaks_ever_collab <- gs4_get("https://docs.google.com/spreadsheets/d/1bte06sIFV_gFb4aIEQ93KL0tLKi3zs8URwWP9j5ViH8/edit#gid=0")
+
+#### VERY IMPORTANT. BEFORE YOU RUN THIS, CHANGE THE RANGE 
+outbreaks_ever_collab %>%
+  range_write(outbreaks_ever, sheet = "nursing_homes", col_names = T)
+
+outbreaks_ever_collab %>% 
+  range_write(residential_care, sheet = "residential_care", col_names = T)
+
+### FOR NURSING HOME PROJECT WITH COLLAB ### 
 percapita <- read_sheet("https://docs.google.com/spreadsheets/d/1yPEiMwTWV2lawwxaCU9GjAqoNmuXicGdBX0BHNuQE2c/edit#gid=1018303427", sheet = "DHHS by day by county") %>% 
   clean_names() %>% 
   subset(date > "2020-06-17")
@@ -455,3 +493,5 @@ nursinghomes_collab %>%
 
 nursinghomes_collab %>% 
   range_write(no_cases, sheet = "all_no_outbreaks", col_names = T, range = "A1")
+
+### END NURSING HOME COLLAB CODE ###
